@@ -1,4 +1,5 @@
 
+DATABASE = "weight_lifter_db"
 
 
 class User:
