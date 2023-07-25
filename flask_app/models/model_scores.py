@@ -1,4 +1,4 @@
-
+from flask_app.config.mysqlconnection import connectToMySQL
 
 
 
@@ -13,3 +13,7 @@ class Scores:
         self.user_id = data['user_id'],
         self.lifts_id = data['lifts_id']
     
+
+    @classmethod
+    def get_all():
+        pass
