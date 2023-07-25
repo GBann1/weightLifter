@@ -35,6 +35,12 @@ class Scores:
         return results
     
     @classmethod
+    def get_score(cls, id):
+        query = "SELECT * FROM scores WHERE id = %(id)s;"
+        result = connectToMySQL(DATABASE).query_db(query,{'id':id})
+        return cls(result[0])
+    
+    @classmethod
     def get_all_scores(cls):
         query = "SELECT scores.created_at AS 'Date', lifts.name AS 'Lift:', scores.score AS 'LBS:', scores.note AS 'Notes:' FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
         results = connectToMySQL(DATABASE).query_db(query)

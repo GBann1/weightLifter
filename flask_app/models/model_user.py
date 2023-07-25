@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 from flask_app import app
+from flask_app import bcrypt
 
 DATABASE = "weight_lifter_db"
 
@@ -24,8 +25,7 @@ class User:
         self.password = data['password'],
         self.acc_setup = data['acc_setup']
         
-
-    @classmethod
+    @staticmethod
     def validate_user(user):
         is_valid = True
         if len(user['first_name']) < 3:
