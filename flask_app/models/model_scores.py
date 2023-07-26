@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-
+from flask import session
 
 DATABASE = "weight_lifter_db"
 
@@ -26,9 +26,18 @@ class Scores:
         return results
     
     @classmethod
-    def get_user_10_scores(cls,id):
+    def get_user_10_scores(cls, id):
         query = "SELECT scores.score AS 'LBS', lifts.name AS 'Lift:', scores.note AS 'Note:' FROM scores JOIN lifts ON scores.lift_id = lifts.id LIMIT 10 WHERE scores.user_id = %(id)s;"
         results = connectToMySQL(DATABASE).query_db(query, {'scores.user_id':id})
+        #catch empty returns
+        if len(results[0]) < 1:
+            return []
+        return results
+    
+    @classmethod
+    def get_all_scores(cls):
+        query = "SELECT scores.created_at AS 'Date', lifts.name AS 'Lift:', scores.score AS 'LBS:', scores.note AS 'Notes:' FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
+        results = connectToMySQL(DATABASE).query_db(query)
         #catch empty returns
         if len(results) < 1:
             return []
@@ -39,15 +48,6 @@ class Scores:
         query = "SELECT * FROM scores WHERE id = %(id)s;"
         result = connectToMySQL(DATABASE).query_db(query,{'id':id})
         return cls(result[0])
-    
-    @classmethod
-    def get_all_scores(cls):
-        query = "SELECT scores.created_at AS 'Date', lifts.name AS 'Lift:', scores.score AS 'LBS:', scores.note AS 'Notes:' FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
-        results = connectToMySQL(DATABASE).query_db(query)
-        #catch empty returns
-        if len(results) < 1:
-            return []
-        return results
     
     @classmethod
     def write_new_score(cls, data):

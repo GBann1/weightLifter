@@ -16,13 +16,13 @@ def render_edit_lift_type(id):
     return render_template('/edit_lifttype.html', lift = lift)
 
 
-@app.route('/admin/write_lift')
+@app.route('/admin/write_lift', methods=["POST"])
 def admin_writelift():
     # verify user is admin in here
     Lifts.write_lift(request.form)
     return redirect('/admin/new_lift_type')
 
-@app.route('/admin/edit_lift')
+@app.route('/admin/edit_lift', methods=["POST"])
 def admin_editlift():
     Lifts.edit_lift(request.form)
     return redirect('/dashboard')
