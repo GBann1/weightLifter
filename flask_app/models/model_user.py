@@ -82,9 +82,9 @@ class User:
 
     #===== LOGIN METHOD =====
     @classmethod
-    def login(cls,data):
+    def login(cls,email):
         query = "SELECT * FROM users WHERE email = %(email)s;"
-        result = connectToMySQL(DATABASE).query_db(query, data)
+        result = connectToMySQL(DATABASE).query_db(query, {'email': email})
         if len(result) < 1:
             return False
         return cls(result[0])
