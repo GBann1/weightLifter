@@ -36,3 +36,7 @@
         width: 30vw;
         margin: 30px auto;
     }
+
+.container h2 {
+    text-align: center;
+}

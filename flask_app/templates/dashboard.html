@@ -61,7 +61,7 @@
                                 <tr>
                                     <td>{{recent.score}}</td>
                                     <td>{{recent.name}}</td>
-                                    <td>{{recent.note}}</td>
+                                    <td class="noteWidth">{{recent.note}}</td>
                                     <td><a href="/user/view_edit/{{recent.id}}">Edit</a> | <a href="/user/delete_score/{{recent.id}}">Delete</a></td>
                                 </tr>
                             {% endfor %}
@@ -90,7 +90,7 @@
                                 <td>{{lift.created_at}}</td>
                                 <td>{{lift.name}}</td>
                                 <td>{{lift.score}}</td>
-                                <td>{{lift.note}}</td>
+                                <td class="noteWidth">{{lift.note}}</td>
                                 {% if lift.user_id == user.id %}
                                     <td><a href="/user/view_edit/{{lift.id}}">Edit</a> | <a href="/user/delete_score/{{lift.id}}">Delete</a></td>
                                 {% else %}

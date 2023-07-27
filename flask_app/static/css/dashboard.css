@@ -55,6 +55,7 @@
         flex: 1;
     }
     .recentLifts {
+        margin-left: 15px;
         flex: 1;
     }
 
@@ -70,6 +71,14 @@
         overflow: auto;
 
     }
+    .td{
+        margin: 8px;
+    }
     .allLiftsTable{
         /* height: 40vh; */
+    }
+    .noteWidth {
+        max-width: 500px;
+        /* max-height: 10px; */
+        overflow: hidden;
     }

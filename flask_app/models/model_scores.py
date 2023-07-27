@@ -64,11 +64,9 @@ class Scores:
     
     @classmethod
     def edit_score(cls, data):
-        if data['user_id'] == session['user_id']:
-            query = "UPDATE scores SET lift_duration = %(lift_duration)s, note = %(note)s, lift_id = %(lift_id)s WHERE scores.id = %(id)s;"
-            void = connectToMySQL(DATABASE).query_db(query, data)
-            return void
-        return 0
+        query = "UPDATE scores SET lift_duration = %(lift_duration)s, note = %(note)s, lift_id = %(lift_id)s WHERE scores.id = %(id)s;"
+        void = connectToMySQL(DATABASE).query_db(query, data)
+        return void
     
     @classmethod
     def delete_score(cls, id):

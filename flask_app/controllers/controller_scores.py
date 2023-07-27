@@ -38,6 +38,7 @@ def record_lift():
 @app.route('/user/view_edit/<int:id>')
 def edit_score(id):
     score = Scores.get_score(id)
+    session['id'] = score.id
     lifts = Lifts.get_all()
     return render_template('edit_lift.html', score = score, lifts = lifts)
 
@@ -45,7 +46,7 @@ def edit_score(id):
 def write_edit():
     data = {
         **request.form,
-        'user_id': session['user_id']
+        'id': session['id']
     }
     Scores.edit_score(data)
     return redirect('/dashboard')
