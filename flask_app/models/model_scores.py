@@ -6,19 +6,20 @@ DATABASE = "weight_lifter_db"
 
 class Scores:
     def __init__(self,data):
-        self.id = data['id'],
-        self.created_at = data['created_at'],
-        self.updated_at = data['updated_at'],
-        self.score = data['score'],
-        self.note = data['note'],
-        self.user_id = data['user_id'],
-        self.lifts_id = data['lifts_id']
+        self.id = data['id']
+        self.created_at = data['created_at']
+        self.updated_at = data['updated_at']
+        self.score = data['score']
+        self.lift_duration = data['lift_duration']
+        self.note = data['note']
+        self.user_id = data['user_id']
+        self.lift_id = data['lift_id']
     
 
     @classmethod
     def get_10_scores(cls):
         #Returns 10 most recent-> Date: Lift: LBS: First Name: Last Name:
-        query = "SELECT scores.created_at AS 'Date', lifts.name AS 'Lift:', scores.score AS 'LBS:', users.first_name AS 'First Name:', users.last_name AS 'Last Name:' FROM scores JOIN users ON scores.user_id = users.id JOIN lifts ON scores.lift_id = lifts.id LIMIT 10;"
+        query = "SELECT scores.created_at, lifts.name, scores.score, users.first_name , users.last_name FROM scores JOIN users ON scores.user_id = users.id JOIN lifts ON scores.lift_id = lifts.id LIMIT 10;"
         results = connectToMySQL(DATABASE).query_db(query)
         #catch empty returns
         if len(results) < 1:
@@ -26,17 +27,17 @@ class Scores:
         return results
     
     @classmethod
-    def get_user_10_scores(cls, id):
-        query = "SELECT scores.score AS 'LBS', lifts.name AS 'Lift:', scores.note AS 'Note:' FROM scores JOIN lifts ON scores.lift_id = lifts.id LIMIT 10 WHERE scores.user_id = %(id)s;"
-        results = connectToMySQL(DATABASE).query_db(query, {'scores.user_id':id})
+    def get_user_10_scores(cls, user_id):
+        query = "SELECT scores.score, lifts.name, scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id WHERE user_id = %(user_id)s LIMIT 10;"
+        results = connectToMySQL(DATABASE).query_db(query, {'user_id':user_id})
         #catch empty returns
-        if len(results[0]) < 1:
+        if not results:
             return []
         return results
     
     @classmethod
     def get_all_scores(cls):
-        query = "SELECT scores.created_at AS 'Date', lifts.name AS 'Lift:', scores.score AS 'LBS:', scores.note AS 'Notes:' FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
+        query = "SELECT scores.created_at, lifts.name, scores.score , scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
         results = connectToMySQL(DATABASE).query_db(query)
         #catch empty returns
         if len(results) < 1:

@@ -3,36 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- link dashboard.css here -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css')}}">
     <title>Dashboard</title>
 </head>
 <body>
     <div class="header">
         <div class="logo">
-            <img src="/flask_app/static/img/logo_clear.png" alt="Logo">
+            <img src="{{ url_for('static', filename='img/logo_clear.png')}}" alt="Logo" id="logoImg">
         </div>
         <div class="account">
-            <img src="/flask_app/static/img/profileimg.png" alt="Profile Picture">
-            <form action="/logout" method="post">
-                <input type="button" value="Logout">
+            <img src="{{ url_for('static', filename='img/profileimg.png')}}" alt="Profile Picture" id="accountImg">
+            <form action="/user/logout" method="post">
+                <input type="submit" value="Logout">
             </form>
         </div>
     </div>
     <div class="container">
-        <div class="topCharts">
-            <div class="thirtydays">
-                <h3>30 Day highs</h3>
-                <!-- insert table with each lifts highscore -->
-            </div>
-            <div class="recentLifts">
-                <h3>Your recent lifts</h3>
-                <!-- insert table with each lifts highscore -->
-                <form action="/user/new_lift" method="post"><input type="button" value="Record New"></form>
+        <div class="top">
+            <h2>Welcome back {{user.first_name}}!</h2>
+            <div class="topCharts">
+                <div class="thirtydays">
+                    <h3>30 Day highs</h3>
+                    <!-- insert table with each lifts highscore -->
+                    <table>
+                        <thead>
+                            <th>Date:</th>
+                            <th>Lift:</th>
+                            <th>LBS:</th>
+                            <th>Name:</th>
+                            <th>Detail:</th>
+                        </thead>
+                        <tbody>
+                            {% for lift in rolling_high %}
+                                <tr>
+                                    <td>{{lift.created_at}}</td>
+                                    <td>{{lift.name}}</td>
+                                    <td>{{lift.score}}</td>
+                                    <td>{{lift.first_name}} {{lift.last_name}}</td>
+                                    <td><a href="/view/detail/"></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="recentLifts">
+                    <h3>Your recent lifts</h3>
+                    <!-- insert table with each lifts highscore -->
+                    <table>
+                        <thead>
+                            <th>LBS:</th>
+                            <th>Lift:</th>
+                            <th>Note:</th>
+                            <th>Action:</th>
+                        </thead>
+                        <tbody>
+                            {% for recent in user_recent %}
+                                <tr>
+                                    <td>{{recent.score}}</td>
+                                    <td>{{recent.name}}</td>
+                                    <td>{{recent.note}}</td>
+                                    <td><a href="/user/edit/">Edit</a> | <a href="/user/delete_score/">Delete</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <form action="/user/record" method="post"><input type="submit" value="Record New"></form>
+                </div>
             </div>
         </div>
         <div class="allLifts">
             <h3>All Lifts</h3>
             <!-- insert table with all lifts and scores -->
+            <table>
+                <thead>
+                    <th>Date:</th>
+                    <th>Lift:</th>
+                    <th>LBS:</th>
+                    <th>Note:</th>
+                    <th>Actions:</th>
+                </thead>
+                <tbody>
+                    {% for lift in all_scores %}
+                        <tr>
+                            <td>{{lift.created_at}}</td>
+                            <td>{{lift.name}}</td>
+                            <td>{{lift.score}}</td>
+                            <td>{{lift.note}}</td>
+                            {% if lift.user_id == user.id %}
+                                <td><a href="/user/edit/">Edit</a> | <a href="/user/delete_score/">Delete</a></td>
+                            {% else %}
+                                <td><a href="/view/detail/"></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

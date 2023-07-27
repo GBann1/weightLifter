@@ -10,9 +10,9 @@ def dashboard():
         return redirect('/')
     rolling_high = Scores.get_10_scores()
     user_recent = Scores.get_user_10_scores(session['user_id'])
-    # user_recent = Scores.get_user_10_scores()
     all_scores = Scores.get_all_scores()
-    return render_template('dashboard.html', rolling_high = rolling_high, user_recent = user_recent, all_scores = all_scores)
+    user = User.get_one(session['user_id'])
+    return render_template('dashboard.html', rolling_high = rolling_high, user_recent = user_recent, all_scores = all_scores, user = user)
 
 @app.route('/view/detail/<int:id>')
 def detail_view(id):
@@ -24,7 +24,7 @@ def write_score():
     Scores.write_new_score(request.form)
     return redirect('/user/record')
 
-@app.route('/user/record')
+@app.route('/user/record', methods=["POST"])
 def record_lift():
     user = User.get_one(session['user_id'])
     return render_template('record_lift.html', user = user)

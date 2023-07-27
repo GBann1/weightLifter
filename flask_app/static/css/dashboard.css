@@ -1,0 +1,67 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: content-box;
+}
+.header{
+    /* width: 100vw; */
+    padding: 10px;
+    border-bottom: 2px solid black;
+    display: flex;
+}
+
+.logo {
+    flex: 3;
+}
+.account {
+    text-align: right;
+    padding-right: 25px;
+    flex: 1;
+}
+    .account input {
+        width: 60px;
+        margin-right: 5px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+    #logoImg {
+        height: 75px;
+    }
+    #accountImg {
+        height: 60px;
+    }
+
+.container {
+    background-color: whitesmoke;
+    /* width: 100vw; */
+    height: 100vh;
+    margin: 0px auto;
+}
+.top {
+    width: 80vw;
+    height: 44vh;
+    padding: 15px;
+    margin: 0px auto;
+    background-color: white;
+}
+    .top h2 {
+        margin-bottom: 15px;
+        font-size: 20pt;
+    }
+.topCharts {
+    display: flex;
+}
+    .thirtydays {
+        flex: 1;
+    }
+    .recentLifts {
+        flex: 1;
+    }
+
+.allLifts {
+    width: 80vw;
+    height: 44vh;
+    margin: 0px auto;
+    padding: 15px;
+    background-color: white;
+}

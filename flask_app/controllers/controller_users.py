@@ -1,7 +1,5 @@
-from flask_app import app
+from flask_app import app, bcrypt
 from flask import render_template, redirect, request, session, flash
-from flask_app import Bcrypt
-bcrypt = Bcrypt(app)
 from flask_app.models.model_user import User
 
 @app.route('/')
@@ -27,13 +25,17 @@ def write_user():
 def login():
     email = request.form['email']
     user_exist = User.login(email)
-    if not user_exist or not bcrypt.check_password_hash(user_exist.password, request.form['password']):
+    print(type(user_exist.password))
+    if not user_exist:
         flash("Invalid Email or Password")
-        session.clear()
         return redirect('/')
+    if not bcrypt.check_password_hash(user_exist.password, request.form['password']):
+        flash("Invalid Email or Password")
+        return redirect('/')
+    session['user_id'] = user_exist.id
     return redirect('/dashboard')
 
-@app.route('/user/logout')
+@app.route('/user/logout', methods=["POST"])
 def logout():
     session.clear()
     return redirect('/')
