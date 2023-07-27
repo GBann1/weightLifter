@@ -65,3 +65,11 @@
     padding: 15px;
     background-color: white;
 }
+    .allLifts table {
+        max-height: 30vh;
+        overflow: auto;
+
+    }
+    .allLiftsTable{
+        /* height: 40vh; */
+    }

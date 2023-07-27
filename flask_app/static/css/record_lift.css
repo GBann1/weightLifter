@@ -1,0 +1,32 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: content-box;
+}
+.header{
+    /* width: 100vw; */
+    padding: 10px;
+    border-bottom: 2px solid black;
+    display: flex;
+}
+
+.logo {
+    flex: 3;
+}
+.account {
+    text-align: right;
+    padding-right: 25px;
+    flex: 1;
+}
+    .account input {
+        width: 60px;
+        margin-right: 5px;
+        padding: 2px;
+        border-radius: 10px;
+    }
+    #logoImg {
+        height: 75px;
+    }
+    #accountImg {
+        height: 60px;
+    }

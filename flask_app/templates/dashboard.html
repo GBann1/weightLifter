@@ -13,7 +13,7 @@
         </div>
         <div class="account">
             <img src="{{ url_for('static', filename='img/profileimg.png')}}" alt="Profile Picture" id="accountImg">
-            <form action="/user/logout" method="post">
+            <form action="/user/logout" method="POST">
                 <input type="submit" value="Logout">
             </form>
         </div>
@@ -67,13 +67,14 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <form action="/user/record" method="post"><input type="submit" value="Record New"></form>
+                    <form action="/user/record"><input type="submit" value="Record New"></form>
                 </div>
             </div>
         </div>
         <div class="allLifts">
             <h3>All Lifts</h3>
             <!-- insert table with all lifts and scores -->
+            
             <table>
                 <thead>
                     <th>Date:</th>
@@ -82,21 +83,23 @@
                     <th>Note:</th>
                     <th>Actions:</th>
                 </thead>
-                <tbody>
-                    {% for lift in all_scores %}
-                        <tr>
-                            <td>{{lift.created_at}}</td>
-                            <td>{{lift.name}}</td>
-                            <td>{{lift.score}}</td>
-                            <td>{{lift.note}}</td>
-                            {% if lift.user_id == user.id %}
-                                <td><a href="/user/edit/">Edit</a> | <a href="/user/delete_score/">Delete</a></td>
-                            {% else %}
-                                <td><a href="/view/detail/"></a></td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
+                <div class="allLiftsTable">
+                    <tbody>
+                        {% for lift in all_scores %}
+                            <tr>
+                                <td>{{lift.created_at}}</td>
+                                <td>{{lift.name}}</td>
+                                <td>{{lift.score}}</td>
+                                <td>{{lift.note}}</td>
+                                {% if lift.user_id == user.id %}
+                                    <td><a href="/user/edit/{{lift.id}}">Edit</a> | <a href="/user/delete_score/{{lift.id}}">Delete</a></td>
+                                {% else %}
+                                    <td><a href="/view/detail/{{lift.id}}">View</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </div>
             </table>
         </div>
     </div>

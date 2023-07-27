@@ -37,7 +37,7 @@ class Scores:
     
     @classmethod
     def get_all_scores(cls):
-        query = "SELECT scores.created_at, lifts.name, scores.score , scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
+        query = "SELECT scores.id, scores.created_at, lifts.name, scores.score , scores.note, scores.user_id FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
         results = connectToMySQL(DATABASE).query_db(query)
         #catch empty returns
         if len(results) < 1:
