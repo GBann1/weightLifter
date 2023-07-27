@@ -25,7 +25,6 @@ def write_user():
 def login():
     email = request.form['email']
     user_exist = User.login(email)
-    print(type(user_exist.password))
     if not user_exist:
         flash("Invalid Email or Password")
         return redirect('/')

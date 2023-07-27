@@ -35,7 +35,6 @@ class User:
             flash("*Last name must be at least 3 characters")
             is_valid = False
 
-        print(user['email'])
         if len(user['email']) < 5:
             flash("*Email must be at least 5 characters")
             is_valid = False
@@ -86,5 +85,4 @@ class User:
         result = connectToMySQL(DATABASE).query_db(query, {'email': email})
         # if len(result) < 1:
         #     return False
-        print(result)
         return cls(result[0])
