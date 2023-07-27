@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/record_lift.css')}}">
+    <title>View Lift</title>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo_clear.png')}}" alt="Logo" id="logoImg">
+        </div>
+        <div class="account">
+            <img src="{{ url_for('static', filename='img/profileimg.png')}}" alt="Profile Picture" id="accountImg">
+            <form action="/user/logout" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+    </div>
+    <div class="showbox" >
+        <h2></h2>
+        <div class="setup">
+            
+            <p read>Date: {{lift.created_at}}</p>
+            <p>Name: {{lift.first_name}} {{lift.last_name}}</p>
+            <p>Lift Type: {{lift.name}}</p>
+            
+            <p>Seconds:{{lift.lift_duration}}</p>
+
+            
+            <label for="score">LBS:</label>
+            <input type="number" step="0.01" name="score" id="score" value="{{lift.score}}">
+            <br><label for="note" >Notes:</label><br>
+            <textarea name="note" id="note" cols="30" rows="10" value="{{lift.note}}">{{lift.note}}</textarea><br>
+            <input type="submit" value="SAVE">
+            <a href="/dashboard">Dashbaord</a>
+        </div>
+    </div>
+</body>
+</html>

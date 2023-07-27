@@ -28,12 +28,18 @@ class Scores:
     
     @classmethod
     def get_user_10_scores(cls, user_id):
-        query = "SELECT scores.score, lifts.name, scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id WHERE user_id = %(user_id)s LIMIT 10;"
+        query = "SELECT scores.id, scores.score, lifts.name, scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id WHERE user_id = %(user_id)s LIMIT 10;"
         results = connectToMySQL(DATABASE).query_db(query, {'user_id':user_id})
         #catch empty returns
         if not results:
             return []
         return results
+    
+    @classmethod
+    def build_scorecard(cls, id):
+        query = "SELECT scores.created_at, lifts.name, scores.score, users.first_name , users.last_name, scores.lift_duration, scores.note FROM scores JOIN users ON scores.user_id = users.id JOIN lifts ON scores.lift_id = lifts.id WHERE scores.id = %(id)s;"
+        results = connectToMySQL(DATABASE).query_db(query, {'id':id})
+        return results[0]
     
     @classmethod
     def get_all_scores(cls):
@@ -57,10 +63,12 @@ class Scores:
         return id
     
     @classmethod
-    def edit_score(cls, id):
-        query = "UPDATE scores SET lift_duration = %(lift_duration)s, note = %(note)s, lift_id = %(lift_id)s WHERE id = %(id)s;"
-        void = connectToMySQL(DATABASE).query_db(query, {'id':id})
-        return void
+    def edit_score(cls, data):
+        if data['user_id'] == session['user_id']:
+            query = "UPDATE scores SET lift_duration = %(lift_duration)s, note = %(note)s, lift_id = %(lift_id)s WHERE scores.id = %(id)s;"
+            void = connectToMySQL(DATABASE).query_db(query, data)
+            return void
+        return 0
     
     @classmethod
     def delete_score(cls, id):

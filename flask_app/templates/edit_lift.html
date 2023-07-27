@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/record_lift.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='img/logo_clear.png')}}" alt="Logo" id="logoImg">
+        </div>
+        <div class="account">
+            <img src="{{ url_for('static', filename='img/profileimg.png')}}" alt="Profile Picture" id="accountImg">
+            <form action="/user/logout" method="POST">
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+    </div>
+    <div class="setup">
+        <form action="/user/write_edit" method="post">
+            <p>Lift Type:</p>
+            <select name="lift_id" id="lift_id" >
+                {% for lift in lifts %}
+                    <option value="{{lift.id}}">{{lift.name}}</option>
+                {% endfor %}
+            </select>
+            <p>Seconds:</p>
+            <label for="3_seconds">3</label>
+            <input type="radio" id="3_seconds" name="lift_duration" value="3">
+            <label for="5_seconds">5</label>
+            <input type="radio" id="5_seconds" name="lift_duration" value="5">
+            <label for="10_seconds">10</label>
+            <input type="radio" id="10_seconds" name="lift_duration" value="10"><br>
+            <label for="score">LBS:</label>
+            <input type="number" step="0.01" name="score" id="score" value="{{score.score}}">
+            <br><label for="note">Notes:</label><br>
+            <textarea name="note" id="note" cols="30" rows="10" value="{{score.note}}">{{score.note}}</textarea><br>
+            <input type="submit" value="SAVE">
+        </form>
+        <form action="/dashboard">
+            <input type="submit" value="EXIT">
+        </form>
+        <a href="/dashboard">Dashbaord</a>
+    </div>
+</body>
+</html>

@@ -62,7 +62,7 @@
                                     <td>{{recent.score}}</td>
                                     <td>{{recent.name}}</td>
                                     <td>{{recent.note}}</td>
-                                    <td><a href="/user/edit/">Edit</a> | <a href="/user/delete_score/">Delete</a></td>
+                                    <td><a href="/user/view_edit/{{recent.id}}">Edit</a> | <a href="/user/delete_score/{{recent.id}}">Delete</a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -92,7 +92,7 @@
                                 <td>{{lift.score}}</td>
                                 <td>{{lift.note}}</td>
                                 {% if lift.user_id == user.id %}
-                                    <td><a href="/user/edit/{{lift.id}}">Edit</a> | <a href="/user/delete_score/{{lift.id}}">Delete</a></td>
+                                    <td><a href="/user/view_edit/{{lift.id}}">Edit</a> | <a href="/user/delete_score/{{lift.id}}">Delete</a></td>
                                 {% else %}
                                     <td><a href="/view/detail/{{lift.id}}">View</a></td>
                                 {% endif %}
