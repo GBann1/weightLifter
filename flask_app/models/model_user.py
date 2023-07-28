@@ -28,27 +28,27 @@ class User:
     def validate_user(user):
         is_valid = True
         if len(user['first_name']) < 3:
-            flash("*First name must be at least 3 characters")
+            flash("*First name must be at least 3 characters", 'register_error')
             is_valid = False
 
         if len(user['last_name']) < 3:
-            flash("*Last name must be at least 3 characters")
+            flash("*Last name must be at least 3 characters", 'register_error')
             is_valid = False
 
         if len(user['email']) < 5:
-            flash("*Email must be at least 5 characters")
+            flash("*Email must be at least 5 characters", 'register_error')
             is_valid = False
 
         if not EMAIL_REGEX.match(user['email']): 
-            flash("*Invalid email address")
+            flash("*Invalid email address", 'register_error')
             is_valid = False
 
         if len(user['password']) < 8:
-            flash("*Password must be at least 8 characters")
+            flash("*Password must be at least 8 characters", 'register_error')
             is_valid = False
 
         if not user['password'] == user['confirm_password']:
-            flash("*Passwords must match")
+            flash("*Passwords must match", 'register_error')
             is_valid = False
 
         def email_unique(email):
@@ -60,7 +60,7 @@ class User:
             return is_valid
 
         if not email_unique(user['email']):
-            flash("*This email is already in use")
+            flash("*This email is already in use", 'register_error')
             is_valid = False
         return is_valid
     
@@ -83,6 +83,6 @@ class User:
     def login(cls,email):
         query = "SELECT * FROM users WHERE email = %(email)s;"
         result = connectToMySQL(DATABASE).query_db(query, {'email': email})
-        # if len(result) < 1:
-        #     return False
+        if not result:
+            return False
         return cls(result[0])

@@ -4,8 +4,6 @@ from flask_app.models.model_user import User
 
 @app.route('/')
 def login_page():
-    session.clear()
-    # session['user_id'] = 1
     return render_template('landing.html')
 
 @app.route('/user/create', methods =["POST"])
@@ -25,11 +23,12 @@ def write_user():
 def login():
     email = request.form['email']
     user_exist = User.login(email)
+    print(user_exist)
     if not user_exist:
-        flash("Invalid Email or Password")
+        flash("*Invalid Email or Password", 'login_error')
         return redirect('/')
     if not bcrypt.check_password_hash(user_exist.password, request.form['password']):
-        flash("Invalid Email or Password")
+        flash("*Invalid Email or Password", 'login_error')
         return redirect('/')
     session['user_id'] = user_exist.id
     return redirect('/dashboard')
