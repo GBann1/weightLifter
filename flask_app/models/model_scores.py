@@ -19,7 +19,7 @@ class Scores:
     @classmethod
     def get_10_scores(cls):
         #Returns 10 most recent-> Date: Lift: LBS: First Name: Last Name:
-        query = "SELECT scores.created_at, lifts.name, scores.score, users.first_name , users.last_name FROM scores JOIN users ON scores.user_id = users.id JOIN lifts ON scores.lift_id = lifts.id LIMIT 10;"
+        query = "SELECT scores.id, scores.created_at, lifts.name, scores.score, users.first_name , users.last_name FROM scores JOIN users ON scores.user_id = users.id JOIN lifts ON scores.lift_id = lifts.id ORDER BY scores.score DESC LIMIT 10;"
         results = connectToMySQL(DATABASE).query_db(query)
         #catch empty returns
         if len(results) < 1:
@@ -28,7 +28,7 @@ class Scores:
     
     @classmethod
     def get_user_10_scores(cls, user_id):
-        query = "SELECT scores.id, scores.score, lifts.name, scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id WHERE user_id = %(user_id)s LIMIT 10;"
+        query = "SELECT scores.id, scores.score, lifts.name, scores.note FROM scores JOIN lifts ON scores.lift_id = lifts.id WHERE user_id = %(user_id)s ORDER BY scores.created_at LIMIT 10;"
         results = connectToMySQL(DATABASE).query_db(query, {'user_id':user_id})
         #catch empty returns
         if not results:
@@ -43,7 +43,7 @@ class Scores:
     
     @classmethod
     def get_all_scores(cls):
-        query = "SELECT scores.id, scores.created_at, lifts.name, scores.score , scores.note, scores.user_id FROM scores JOIN lifts ON scores.lift_id = lifts.id;"
+        query = "SELECT scores.id, scores.created_at, lifts.name, scores.score , scores.note, scores.user_id FROM scores JOIN lifts ON scores.lift_id = lifts.id ORDER BY scores.created_at;"
         results = connectToMySQL(DATABASE).query_db(query)
         #catch empty returns
         if len(results) < 1:

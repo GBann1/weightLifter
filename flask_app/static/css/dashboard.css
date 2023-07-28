@@ -82,3 +82,10 @@
         /* max-height: 10px; */
         overflow: hidden;
     }
+
+    table {
+        border-collapse: collapse;
+        border: 1px soild black;
+        padding: 3px 5px;
+        margin: 5px;
+    }
